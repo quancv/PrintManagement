@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PrintManagement.Application.Payloads.Requests.Users
 {
-    public class Login
+    public class Login_Request
     {
         [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }

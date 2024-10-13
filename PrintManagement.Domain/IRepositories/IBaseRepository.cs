@@ -13,6 +13,6 @@ namespace PrintManagement.Domain.IRepositories
         Task<T> GetAsync(Expression<Func<T, bool>> expression);
         Task<T> CreateAsync(T entity);
         Task<T> UpdateAsync(T entity);  
-
+        Task<string> DeleteAsync(int Id);
     }
 }

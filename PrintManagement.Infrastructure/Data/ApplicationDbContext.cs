@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrintManagement.Domain.Entities;
+using PrintManagement.Domain.Enumerates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,12 @@ namespace PrintManagement.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
             // Seed data
             modelBuilder.Entity<Role>().HasData(
-                new Role { Id = 1, RoleCode = "LEA", RoleName = "Leader" },
-                new Role { Id = 2, RoleCode = "DES", RoleName = "Designer" },
-                new Role { Id = 3, RoleCode = "DEL", RoleName = "Deliver" },
-                new Role { Id = 4, RoleCode = "MAN", RoleName = "Manager" },
-                new Role { Id = 5, RoleCode = "EMP", RoleName = "Employee" },
-                new Role { Id = 6, RoleCode = "ADM", RoleName = "Admin" }
+                new Role { Id = (int)ConstantEnums.Role.Leader, RoleCode = "LEA", RoleName = "Leader" },
+                new Role { Id = (int)ConstantEnums.Role.Designer, RoleCode = "DES", RoleName = "Designer" },
+                new Role { Id = (int)ConstantEnums.Role.Deliver, RoleCode = "DEL", RoleName = "Deliver" },
+                new Role { Id = (int)ConstantEnums.Role.Manager, RoleCode = "MAN", RoleName = "Manager" },
+                new Role { Id = (int)ConstantEnums.Role.Employee, RoleCode = "EMP", RoleName = "Employee" },
+                new Role { Id = (int)ConstantEnums.Role.Admin, RoleCode = "ADM", RoleName = "Admin" }
             );
         }
         public async Task<int> CommitChangeAsync()

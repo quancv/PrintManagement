@@ -12,5 +12,8 @@ namespace PrintManagement.Domain.IRepositories
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserByUsername(string username);
         Task<User> GetUserByPhoneNumber(string phoneNumber);
+        Task<User> GetUserById(int id);
+
+        Task AddRoleAsync(User user, List<int> roles);
     }
 }

@@ -25,6 +25,18 @@ namespace PrintManagement.Infrastructure.Repositories
             return entity;
         }
 
+        public async Task<string> DeleteAsync(int Id)
+        {
+            var entity = await _context.SetEntity<T>().FindAsync(Id);
+            if (entity == null) 
+            {
+                return "Not Found";
+            }
+            _context.SetEntity<T>().Remove(entity);
+            await _context.SaveChangesAsync();
+            return "Delete Success";
+        }
+
         public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> expression = null)
         {
             IQueryable<T> query = expression != null 
