@@ -36,6 +36,14 @@ namespace PrintManagement.API.Controllers
         {
             return Ok(await _authService.Login(login)); 
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddRole(int userId, List<int> roleIds)
+        {
+            return Ok(await _authService.AddRoleAsync(userId, roleIds));
+        }
+
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePassword_Request changePassword_Request)

@@ -14,6 +14,5 @@ namespace PrintManagement.Domain.IRepositories
         Task<User> GetUserByPhoneNumber(string phoneNumber);
         Task<User> GetUserById(int id);
 
-        Task AddRoleAsync(User user, List<int> roles);
     }
 }

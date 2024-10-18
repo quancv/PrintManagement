@@ -12,13 +12,18 @@ namespace PrintManagement.Infrastructure.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
         public BaseRepository(ApplicationDbContext context) 
         {
             _context = context;
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<int> CountAsync(Expression<Func<T, bool>> expression = null)
+        {
+            return await _context.SetEntity<T>().CountAsync(expression);
+        }
+
+        public virtual async Task<T> CreateAsync(T entity)
         {
             _context.SetEntity<T>().Add(entity);
             await _context.SaveChangesAsync();
@@ -49,7 +54,7 @@ namespace PrintManagement.Infrastructure.Repositories
             return await _context.SetEntity<T>().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             _context.SetEntity<T>().Update(entity);
             await _context.SaveChangesAsync();

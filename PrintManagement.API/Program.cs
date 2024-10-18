@@ -28,7 +28,13 @@ builder.Services.AddScoped<IBaseRepository<ConfirmEmail>, BaseRepository<Confirm
 builder.Services.AddScoped<IBaseRepository<Permissions>, BaseRepository<Permissions>>();
 builder.Services.AddScoped<IBaseRepository<Role>, BaseRepository<Role>>();
 builder.Services.AddScoped<IBaseRepository<RefreshToken>, BaseRepository<RefreshToken>>();
+builder.Services.AddScoped<IBaseRepository<Team>, TeamRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();  
+builder.Services.AddScoped<IBaseRepository<Project>, BaseRepository<Project>>();
+builder.Services.AddScoped<IBaseRepository<Customer>, BaseRepository<Customer>>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,7 +57,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
     };
 });
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

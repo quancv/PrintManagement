@@ -35,17 +35,6 @@ namespace PrintManagement.Infrastructure.Repositories
             return user;
         }
 
-        public async Task AddRoleAsync(User user, List<int> roles)
-        {
-            List<Permissions> permissions = new List<Permissions>();
-            foreach (var id in roles)
-            {
-                permissions.Add(new Permissions { UserId = user.Id, RoleId = id });
-            }
-            _context.Permissions.AddRangeAsync(permissions);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<User> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);

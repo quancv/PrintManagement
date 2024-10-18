@@ -19,5 +19,6 @@ namespace PrintManagement.Application.IServices
         Task<ResponeObject<UserInfor>> ChangePassword(int userId, ChangePassword_Request changePassword_Request);
         Task<string> ForgotPassword(string email);
         Task<string> ConfirmAndSetPassword(ForgotPassword_Request forgotPassword_Request);
+        Task<string> AddRoleAsync(int userId, List<int> roles);
     }
 }

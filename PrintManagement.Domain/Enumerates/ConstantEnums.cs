@@ -22,5 +22,12 @@ namespace PrintManagement.Domain.Enumerates
             Employee = 5,
             Admin = 6
         }
+
+        public enum ProjectStatus
+        {
+            Designing = 1, 
+            Printing = 2, 
+            Completed = 3
+        }
     }
 }

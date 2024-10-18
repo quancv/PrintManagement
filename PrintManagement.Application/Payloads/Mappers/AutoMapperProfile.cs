@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using PrintManagement.Application.Payloads.Requests.Project;
+using PrintManagement.Application.Payloads.Requests.Teams;
 using PrintManagement.Application.Payloads.Requests.Users;
 using PrintManagement.Application.Payloads.Respones.Users;
 using PrintManagement.Domain.Entities;
@@ -16,6 +18,9 @@ namespace PrintManagement.Application.Payloads.Mappers
         {
             CreateMap<Register, User>();
             CreateMap<User, UserInfor>();
+            CreateMap<CreateTeam_Request, Team>();
+            CreateMap<UpdateTeam_Request, Team>();
+            CreateMap<CreateProject_Request, Project>();
         }
     }
 }

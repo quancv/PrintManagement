@@ -110,7 +110,7 @@ namespace PrintManagement.Application.Services
                 };
 
                 await _baseConfirmRepository.CreateAsync(confirmEmail);
-                await _userRepository.AddRoleAsync(user, new List<int> { (int)ConstantEnums.Role.Admin });
+                await AddRoleAsync(user.Id, new List<int> { (int)ConstantEnums.Role.Employee });
                 var emailMessage = new EmailMessage(new string[] { user.Email }, "Confirm your account", $"Confirm Code: {confirmEmail.ConfirmCode}");
                 var responeMessage = _emailService.SendMail(emailMessage);
                 return new ResponeObject<UserInfor>
@@ -129,6 +129,25 @@ namespace PrintManagement.Application.Services
                     Data = null
                 };
             }
+        }
+
+        public async Task<string> AddRoleAsync(int userId, List<int> roles)
+        {
+            var user = await _baseUserRepository.GetAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return $"Not Found User With Id = {userId}";
+            }
+            List<Permissions> permissions = new List<Permissions>();
+            foreach (var id in roles)
+            {
+                permissions.Add(new Permissions { UserId = userId, RoleId = id });
+            }
+            foreach (var permission in permissions)
+            {
+                await _basePermissionsRepository.CreateAsync(permission);
+            }
+            return $"Add Role To User With Id = {userId} Success";
         }
         public async Task<string> ConfirmRegister(string confirmCode)
         {
@@ -210,6 +229,7 @@ namespace PrintManagement.Application.Services
                 new Claim("Username", user.Username.ToString()),
                 new Claim("Email", user.Email.ToString()),
                 new Claim("PhoneNumber", user.PhoneNumber.ToString()),
+                new Claim("TeamId", user.TeamId.ToString()),
             };
             foreach (var permission in permissions)
             {
@@ -217,7 +237,7 @@ namespace PrintManagement.Application.Services
                 {
                     if(permission.RoleId == role.Id)
                     {
-                        claims.Add(new Claim("Permission", role.RoleName.ToString()));
+                        claims.Add(new Claim(ClaimTypes.Role, role.RoleName.ToString()));
                     }
                 }
             };
@@ -227,7 +247,7 @@ namespace PrintManagement.Application.Services
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddMinutes(10),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );
             _ = int.TryParse(_configuration["JWT:ExpiryRefreshToken"], out int expiryTimeRefreshToken);

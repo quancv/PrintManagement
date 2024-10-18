@@ -18,8 +18,15 @@ namespace PrintManagement.Domain.Entities
         public string Avatar { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? UpdateTime { get; set; }
+        
+        public int? TeamId { get; set; }
+        public virtual Team? Team { get; set; }
+        
         public ConstantEnums.UserStatusEnum UserStatus { get; set; } = ConstantEnums.UserStatusEnum.UnActivated;
         public virtual ICollection<Permissions>? Permissions { get; set; }
+        public virtual ICollection<Project>? Projects { get; set;}
 
     }
+
+    
 }
